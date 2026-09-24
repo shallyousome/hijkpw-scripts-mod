@@ -569,7 +569,7 @@ getCert() {
         ~/.acme.sh/acme.sh  --install-cert -d $DOMAIN --ecc \
             --key-file       $KEY_FILE  \
             --fullchain-file $CERT_FILE \
-            --reloadcmd     "systemctl restart xray"
+            --reloadcmd     "if systemctl cat xray.service >/dev/null 2>&1; then systemctl restart xray; fi"
         [[ -f $CERT_FILE && -f $KEY_FILE ]] || {
             colorEcho $RED " 获取证书失败，请到 https://hijk.art 反馈"
             exit 1
